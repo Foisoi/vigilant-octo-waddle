@@ -1,4 +1,5 @@
 from primes import get_primes
+from sys import argv
 
 
 def empower(digits: str, _block_size: int):
@@ -54,6 +55,18 @@ def charify(string: str) -> str:
 
 
 block = 64
-print("Enter string:")
-r = stringify(fix(str(mix(charify(input()), block)), block))
-print(r, end="\n")
+if __name__ == "__main__":
+    if len(argv) > 1:
+        r = ""
+        if len(argv) != 3:
+            r = "".join(argv[1:])
+        else:
+            if argv[1] == "-f":
+                t = open(argv[2])
+                r = "".join(t.readlines())
+            else:
+                print(f"Usage {argv[0]} -f filename.ext")
+        if len(r) > 0:
+            print(stringify(fix(str(mix(charify(r), block)), block)), end="\n")
+    else:
+        print(f"Usage: {argv[0]} \"Message\"\n       {argv[0]} -f filename.ext")
