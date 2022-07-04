@@ -1,3 +1,4 @@
 # vigilant-octo-waddle
-For hashing
-Input some string and get your hash 
+Python script for hashing
+
+Input some string and get a hash digest
