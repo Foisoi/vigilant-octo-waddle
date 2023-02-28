@@ -1,4 +1,6 @@
-from sys import argv
+from sys import argv, set_int_max_str_digits
+
+set_int_max_str_digits(100000)
 
 _primes = {2, 3, 5}
 _glossary = \
