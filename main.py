@@ -1,7 +1,5 @@
 from sys import argv, set_int_max_str_digits
-
-set_int_max_str_digits(100000)
-
+set_int_max_str_digits(1000000)
 _primes = {2, 3, 5}
 _glossary = \
     {
@@ -159,8 +157,8 @@ def charify(string: str) -> str:
 
 
 if __name__ == "__main__":
+    block = 64
     if len(argv) > 2:
-        block = 64
         content = " "
         if argv[1] == "-file":
             file = open(argv[2], "r+b")
@@ -172,4 +170,13 @@ if __name__ == "__main__":
             block = int(argv[3])
         print(base69(fix(str(mix(charify(content), block)), block)))
     else:
+        if argv[1] == "-stream":
+            while True:
+                raw_content = input()
+                if len(raw_content) < 3:
+                    exit(0)
+                raw_content = raw_content.split(" ")
+                if len(raw_content) > 1:
+                    block = int(raw_content.pop())
+                print("block=" + str(block), base69(fix(str(mix(charify(" ".join(raw_content)), block)), block)))
         print(f"Wrong arguments. Use:\n main.py -text \"The quick brown fox jumps over a lazy dog\" 43\n main.py -file \"backup_0213.zip\" 70""")
