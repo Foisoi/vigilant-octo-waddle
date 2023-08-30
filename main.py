@@ -92,7 +92,8 @@ def get_primes(size: int):
         if len(_primes) >= size:
             break
         i_ += 2
-    return _primes
+    return list(sorted(list(_primes)))
+    # return _primes
 
 
 def empower(digits: str, _block_size: int):
@@ -157,26 +158,32 @@ def charify(string: str) -> str:
 
 
 if __name__ == "__main__":
-    block = 64
-    if len(argv) > 2:
-        content = " "
-        if argv[1] == "-file":
-            file = open(argv[2], "r+b")
-            content = "".join(list(map(str, file.readlines())))
-            file.close()
-        elif argv[1] == "-text":
-            content = argv[2]
-        if len(argv) > 3:
-            block = int(argv[3])
-        print(base69(fix(str(mix(charify(content), block)), block)))
-    else:
-        if argv[1] == "-stream":
-            while True:
-                raw_content = input()
-                if len(raw_content) < 3:
-                    exit(0)
-                raw_content = raw_content.split(" ")
-                if len(raw_content) > 1:
-                    block = int(raw_content.pop())
-                print("block=" + str(block), base69(fix(str(mix(charify(" ".join(raw_content)), block)), block)))
-        print(f"Wrong arguments. Use:\n main.py -text \"The quick brown fox jumps over a lazy dog\" 43\n main.py -file \"backup_0213.zip\" 70""")
+    try:
+        block = 64
+        if len(argv) > 2:
+            content = " "
+            if argv[1] == "-file":
+                file = open(argv[2], "r+b")
+                content = "".join(list(map(str, file.readlines())))
+                file.close()
+            elif argv[1] == "-text":
+                content = argv[2]
+            if len(argv) > 3:
+                block = int(argv[3])
+            print(base69(fix(str(mix(charify(content), block)), block)))
+        else:
+            if argv[1] == "-stream":
+                while True:
+                    raw_content = input().replace("\n", "", 1)
+                    if len(raw_content) < 1:
+                        exit(0)
+                    raw_content = raw_content.split(" ")
+                    if len(raw_content) > 1:
+                        try:
+                            block = int(raw_content.pop())
+                        except:
+                            pass
+                    print("block=" + str(block), base69(fix(str(mix(charify(" ".join(raw_content)), block)), block)))
+            print(f"Wrong arguments. Use:\n main.py -text \"The quick brown fox jumps over a lazy dog\" 43\n main.py -file \"backup_0213.zip\" 70""")
+    except:
+        print("closed")
